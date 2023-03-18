@@ -21,16 +21,16 @@ contact_point_radius = 0.0001; %m
 density = 1000;
 
 leg_width = 0.08;
-lower_leg_length = 0.38; 
-upper_leg_length = 0.40;
+lower_leg_length = 0.18; 
+upper_leg_length = 0.20;
 
-foot_x = 0.17;
-foot_y = 0.17;
+foot_x = 0.12;
+foot_y = 0.15;
 foot_z = 0.02;
 
-torso_width = 0.24; 
-torso_length = 0.20; 
-torso_height = 0.35; 
+torso_width = 0.14; 
+torso_length = 0.18; 
+torso_height = 0.15; 
 
 torso_offset_height = 0; 
 torso_offset_length = 0; 

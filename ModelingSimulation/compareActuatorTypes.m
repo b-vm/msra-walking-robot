@@ -19,6 +19,9 @@ actuatorType = 3;
 tic; simout_motor = sim(mdlName,'StopTime','10');
 disp(['Compiled and ran Motor actuated simulation in ' num2str(toc) ' seconds']);
 
+
+
+
 %% Torso Position Plots
 figure(1)
 subplot(3,1,1)
@@ -50,14 +53,18 @@ legend('Motion','Torque','Motor');
 xlabel('Time [s]');
 ylabel('Torso Z Position [m]');
 
+
+
 %% Joint Plots
 jointNames = {'ankleroll','anklepitch','knee','hippitch','hiproll','hipyaw'};
+jointNamesAngularSpeed = {'ankleroll_speed','anklepitch_speed','knee_speed','hippitch_speed','hiproll_speed','hipyaw_speed'};
+
 for idx = 1:6
     figure(idx+1)
     jName = jointNames{idx};
     
     % Joint angle
-    subplot(2,1,1)
+    subplot(3,1,1)
     hold on
     modifier = [jName '_angle'];
     plot(get(simout_motion.simout,'measR').Values.(modifier).Time,get(simout_motion.simout,'measR').Values.(modifier).Data,'b-');
@@ -69,7 +76,7 @@ for idx = 1:6
     title(jointNames{idx})
         
     % Joint torque
-    subplot(2,1,2)
+    subplot(3,1,2)
     hold on
     modifier = [jName '_torque'];
     plot(get(simout_motion.simout,'measR').Values.(modifier).Time,get(simout_motion.simout,'measR').Values.(modifier).Data,'b-');
@@ -79,6 +86,17 @@ for idx = 1:6
     xlabel('Time [s]');
     ylabel('Joint Torque [N*m]');
     ylim(max_torque*[-1, 1])
+
+    % Joint angular speed
+    subplot(3,1,3)
+    hold on
+    modifier = [jName, '_speed'];
+    plot(get(simout_motion.simout,'measR').Values.(modifier).Time,get(simout_motion.simout,'measR').Values.(modifier).Data,'b-');
+    plot(get(simout_torque.simout,'measR').Values.(modifier).Time,get(simout_torque.simout,'measR').Values.(modifier).Data,'r-');
+    plot(get(simout_motor.simout,'measR').Values.(modifier).Time, get(simout_motor.simout,'measR').Values.(modifier).Data, 'k-');
+    legend('Motion','Torque','Motor');
+    xlabel('Time [s]');
+    ylabel('Joint Angular Speed [rad/s]');
 end
 
 
